@@ -2,6 +2,9 @@ from __future__ import annotations
 
 import logging
 
+logging.basicConfig(
+        level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s: %(message)s')
+
 import streamlit as st
 
 from app.auth import check_password
@@ -33,6 +36,4 @@ def main() -> None:
         render_dashboard_tab(model, vectorizer, y_test, X_test_vec, metadata)
 
 if __name__ == '__main__':
-    logging.basicConfig(
-        level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s: %(message)s')
     main()
