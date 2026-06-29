@@ -13,33 +13,32 @@ from nltk.tokenize import word_tokenize
 logger = logging.getLogger(__name__)
 
 NLTK_DATA_DIR = Path(__file__).resolve().parent.parent / 'nltk_data'
-NLTK_DATA_DIR.mkdir(exist_ok=True)
 
 if str(NLTK_DATA_DIR) not in nltk.data.path:
     nltk.data.path.insert(0, str(NLTK_DATA_DIR))
 
-def ensure_nltk_resources() -> None:
-    '''Download NLTK resources if not already present.'''
-    resources = {
-        'tokenizers/punkt': 'punkt',
-        'tokenizers/punkt_tab': 'punkt_tab',
-        'corpora/stopwords': 'stopwords',}
+# def ensure_nltk_resources() -> None:
+#     '''Download NLTK resources if not already present.'''
+#     resources = {
+#         'tokenizers/punkt': 'punkt',
+#         'tokenizers/punkt_tab': 'punkt_tab',
+#         'corpora/stopwords': 'stopwords',}
     
-    for path, package in resources.items():
-        try:
-            nltk.data.find(path)
-            logger.debug(f'NLTK resource already present: {package}')
-        except LookupError:
-            logger.info(f'NLTK resource "{package}" not found, downloading')
-            success = nltk.download(package, download_dir=str(NLTK_DATA_DIR), quiet=False)
-            if not success:
-                logger.error(f'Failed to download NLTK resource: {package}')
-                raise RuntimeError(
-                    f'Could not download required NLTK resource "{package}". '
-                    'Check network access and try running '
-                    f'"python -m nltk.downloader {package}" manually.')
+#     for path, package in resources.items():
+#         try:
+#             nltk.data.find(path)
+#             logger.debug(f'NLTK resource already present: {package}')
+#         except LookupError:
+#             logger.info(f'NLTK resource "{package}" not found, downloading')
+#             success = nltk.download(package, download_dir=str(NLTK_DATA_DIR), quiet=False)
+#             if not success:
+#                 logger.error(f'Failed to download NLTK resource: {package}')
+#                 raise RuntimeError(
+#                     f'Could not download required NLTK resource "{package}". '
+#                     'Check network access and try running '
+#                     f'"python -m nltk.downloader {package}" manually.')
 
-ensure_nltk_resources
+# ensure_nltk_resources
 
 _STEMMER = PorterStemmer()
 _STOP_WORDS: set[str] = set(stopwords.words('english'))
