@@ -54,7 +54,7 @@ git lfs install
 pipenv install --dev
 ```
 
-NLTK resources (`punkt`, `punkt_tab`, `stopwords`) are downloaded on first run.
+NLTK resources (`punkt`, `punkt_tab`, `stopwords`) are included in the repo.
 
 ### 3. Configure secrets
 
