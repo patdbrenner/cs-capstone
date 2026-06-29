@@ -1,0 +1,14 @@
+{
+  "trained_at": "2026-06-29T18:32:04.982573+00:00",
+  "best_params": {
+    "max_depth": 73,
+    "max_features": "sqrt",
+    "min_samples_leaf": 2,
+    "min_samples_split": 3,
+    "n_estimators": 213
+  },
+  "cv_weighted_f1": 0.8118064520927138,
+  "test_weighted_f1": 0.8226664025539724,
+  "train_size": 38269,
+  "test_size": 9568
+}
