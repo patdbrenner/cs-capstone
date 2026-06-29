@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 import string
+from pathlib import Path
 
 import nltk
 import pandas as pd
@@ -10,6 +11,12 @@ from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize
 
 logger = logging.getLogger(__name__)
+
+NLTK_DATA_DIR = Path(__file__).resolve().parent.parent / 'nltk_data'
+NLTK_DATA_DIR.mkdir(exist_ok=True)
+
+if str(NLTK_DATA_DIR) not in nltk.data.path:
+    nltk.data.path.insert(0, str(NLTK_DATA_DIR))
 
 def ensure_nltk_resources() -> None:
     '''Download NLTK resources if not already present.'''
@@ -24,7 +31,7 @@ def ensure_nltk_resources() -> None:
             logger.debug(f'NLTK resource already present: {package}')
         except LookupError:
             logger.info(f'NLTK resource "{package}" not found, downloading')
-            success = nltk.download(package, quiet=False)
+            success = nltk.download(package, download_dir=str(NLTK_DATA_DIR), quiet=False)
             if not success:
                 logger.error(f'Failed to download NLTK resource: {package}')
                 raise RuntimeError(
@@ -35,7 +42,7 @@ def ensure_nltk_resources() -> None:
 ensure_nltk_resources
 
 _STEMMER = PorterStemmer()
-_STOP_WORDS = set(stopwords.words('english'))
+_STOP_WORDS: set[str] = set(stopwords.words('english'))
 _PUNCTUATION_TABLE = str.maketrans('', '', string.punctuation)
 
 def clean_text(text: str) -> str:
